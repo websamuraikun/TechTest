@@ -34,7 +34,7 @@ public static class MockData
             {
                 UCR = "UCR2024003",
                 CompanyId = 2,
-                ClaimTypeId = 5, // Liability
+                ClaimTypeId = 5,
                 ClaimDate = new DateTime(2024, 3, 22),
                 LossDate = new DateTime(2024, 3, 20),
                 AssuredName = "Meridian Logistics PLC",
@@ -45,7 +45,7 @@ public static class MockData
             {
                 UCR = "UCR2024004",
                 CompanyId = 2,
-                ClaimTypeId = 1, // Accidental Damage
+                ClaimTypeId = 1, 
                 ClaimDate = new DateTime(2024, 4, 11),
                 LossDate = new DateTime(2024, 4, 9),
                 AssuredName = "Meridian Logistics PLC",
@@ -56,7 +56,7 @@ public static class MockData
             {
                 UCR = "UCR2024005",
                 CompanyId = 3,
-                ClaimTypeId = 4, // Flood
+                ClaimTypeId = 4,
                 ClaimDate = new DateTime(2024, 5, 30),
                 LossDate = new DateTime(2024, 5, 25),
                 AssuredName = "Pinnacle Retail Group",

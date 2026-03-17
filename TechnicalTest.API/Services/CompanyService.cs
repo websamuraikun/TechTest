@@ -6,20 +6,9 @@ namespace TechnicalTest.API.Services;
 
 public class CompanyService : ICompanyService
 {
-    private readonly List<Company> _companies;
-    public CompanyService()
-    {
-        _companies = MockData.GetMockCompanies();
-    }
-
-     public CompanyService(List<Company> companies)
-    {
-        _companies = companies;
-    }
     public Task<List<CompanyDTO>> GetCompaniesAsync()
     {
         var companies = MockData.GetMockCompanies();
-        var claims = MockData.GetMockClaims();
 
         var result = companies.Select(company => new CompanyDTO
         {
@@ -32,7 +21,7 @@ public class CompanyService : ICompanyService
             Country = company.Country,
             Active = company.Active,
             InsuranceEndDate = company.InsuranceEndDate,
-            HasActivePolicy = claims.Where(x => x.CompanyId == company.Id).Any(x => !x.Closed),
+            HasActivePolicy = company.InsuranceEndDate > DateTime.Now,
         }).ToList();
 
         return Task.FromResult(result);
@@ -45,8 +34,6 @@ public class CompanyService : ICompanyService
         if (company is null)
             return null;
 
-        var companyClaims = MockData.GetMockClaims().Where(x => x.CompanyId == Id);
-
         return new CompanyDTO
         {
             Id = Id,
@@ -58,7 +45,7 @@ public class CompanyService : ICompanyService
             Country = company.Country,
             Active = company.Active,
             InsuranceEndDate = company.InsuranceEndDate,
-            HasActivePolicy = companyClaims.Any(x => !x.Closed),
+            HasActivePolicy = company.InsuranceEndDate > DateTime.Now,
         };
     }
 }

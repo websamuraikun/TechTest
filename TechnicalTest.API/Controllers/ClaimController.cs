@@ -1,15 +1,13 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TechnicalTest.API.DTOs;
-using TechnicalTest.API.Models;
 using TechnicalTest.API.Models.DTOs;
 using TechnicalTest.API.Services;
 
 namespace TechnicalTest.API.Controllers;
 
-[Route("[controller]")]
-public class ClaimController : Controller
+[ApiController]
+[Route("api/[controller]")]
+public class ClaimController : ControllerBase
 {
     private readonly ILogger<ClaimController> _logger;
     private readonly IClaimService _claimService;
@@ -35,7 +33,10 @@ public class ClaimController : Controller
         var claim = await _claimService.GetClaimByUCRAsync(ucr);
 
         if (claim is null)
+        {
+            _logger.LogWarning("Claim with UCR {UCR} could not be found", ucr);
             return NotFound($"Claim {ucr} could not be found");
+        }
 
         return Ok(claim);
     }
@@ -53,8 +54,11 @@ public class ClaimController : Controller
 
         var claims = await _claimService.GetClaimsByCompanyIdAsync(companyId);
 
-        if (!claims.Any())
+        if (claims is null || !claims.Any())
+        {
+            _logger.LogWarning("No claims found for company {CompanyId}", companyId);
             return NotFound($"There are no claims for company {companyId}");
+        }
 
         return Ok(claims);
     }
@@ -78,7 +82,11 @@ public class ClaimController : Controller
 
         var result = await _claimService.UpdateClaimAsync(ucr, request);
 
-        if (result == null) return NotFound($"Claim {ucr} not found");
+        if (result == null)
+        {
+            _logger.LogWarning("Claim with UCR {UCR} not found for update", ucr);
+            return NotFound($"Claim {ucr} not found");
+        }
 
         return Ok(result);
     }

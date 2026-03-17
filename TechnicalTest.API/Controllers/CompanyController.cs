@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Mvc;
 using TechnicalTest.API.Models.DTOs;
 using TechnicalTest.API.Services;
