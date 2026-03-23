@@ -135,6 +135,4 @@ A: Install Entity Framework Core, add a `DbContext`, and replace `MockData` call
 
 ## Comments
 I have added test for the companyService but to not overenginerring the data used in the stest is the same as the one from the services. 
-Loggin also could be added# TechTest
-# TechTest
-# TechTest
+LIn a real project I would add loggin and pagination for the endpoint and services. Security for the api

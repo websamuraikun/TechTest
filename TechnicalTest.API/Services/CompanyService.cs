@@ -9,6 +9,7 @@ public class CompanyService : ICompanyService
     public Task<List<CompanyDTO>> GetCompaniesAsync()
     {
         var companies = MockData.GetMockCompanies();
+        var claims = MockData.GetMockClaims();
 
         var result = companies.Select(company => new CompanyDTO
         {
@@ -21,7 +22,7 @@ public class CompanyService : ICompanyService
             Country = company.Country,
             Active = company.Active,
             InsuranceEndDate = company.InsuranceEndDate,
-            HasActivePolicy = company.InsuranceEndDate > DateTime.Now,
+            HasActivePolicy = claims.Any(c => c.CompanyId == company.Id && !c.Closed),
         }).ToList();
 
         return Task.FromResult(result);
@@ -34,6 +35,8 @@ public class CompanyService : ICompanyService
         if (company is null)
             return null;
 
+        var claims = MockData.GetMockClaims();
+
         return new CompanyDTO
         {
             Id = Id,
@@ -45,7 +48,7 @@ public class CompanyService : ICompanyService
             Country = company.Country,
             Active = company.Active,
             InsuranceEndDate = company.InsuranceEndDate,
-            HasActivePolicy = company.InsuranceEndDate > DateTime.Now,
+            HasActivePolicy = claims.Any(c => c.CompanyId == Id && !c.Closed),
         };
     }
 }
